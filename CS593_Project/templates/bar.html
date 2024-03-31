@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>bar graph</title>
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <style>
+        span {
+            margin: 0 7px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container py-5">
+
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4">F1-race Predictor</h1>
+        </div>
+    </div>
+    <!-- End -->
+    <form class="row">
+        <div class="col-lg-7 mx-auto">
+            <div class="bg-white rounded-lg shadow-sm p-5">
+                <div id="bar" style="width:500px;height: 450px;"></div>
+                <div class="row" style="margin-left: 120px">
+                    <span class="btn btn-info"  onclick="img_show(0)" style="background-color:#CA2C27">SVM</span>
+                    <span class="btn btn-info" onclick="img_show(1)" style="background-color:#CA2C27">NN</span>
+                    <span class="btn btn-info" onclick="img_show(2)" style="background-color:#033C56">NN</span>
+                    <span class="btn btn-info" onclick="img_show(3)" style="background-color:#033C56">RF</span>
+                    <span class="btn btn-info" onclick="img_show(4)" style="background-color:#033C56">SVM</span>
+                </div>
+                <div id="panel" class="panel">
+                    <!--                    <img src="{{ url_for('static', filename='images/img.png') }}">-->
+                    <img data-src="{{ url_for('static', filename='images/1.png') }}">
+                    <img data-src="{{ url_for('static', filename='images/2.png') }}">
+                    <img data-src="{{ url_for('static', filename='images/3.png') }}">
+                    <img data-src="{{ url_for('static', filename='images/4.png') }}">
+                    <img data-src="{{ url_for('static', filename='images/5.png') }}">
+                </div>
+                <a class="btn btn-success bottom-right" href="/index">train model</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script type="text/javascript">
+    String.prototype.replaceAll = function (FindText, RepText) {
+        return this.replace(new RegExp(FindText, "g"), RepText);
+    }
+    var chart = echarts.init(document.getElementById('bar'));
+    var option = {
+        title: {
+            text: 'Model with Accurancy',
+            subtext: "With besr hyper paraweters",
+            x: 'left'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: function (params, ticket, callback) {
+                console.log(params);
+                if (params[0].value !== "-") {
+                    params = params[0]
+                } else {
+                    params = params[1]
+                }
+                console.log(params)
+                $.ajax({
+                    method: "get",
+                    url: "/tooltitle",
+                    data: {
+                        "cata_model": params.seriesName + "," + params.axisValueLabel,
+                    },
+                })
+                    .then((res) => {
+                        callback(ticket, JSON.stringify(res).replaceAll('"', ""));
+                    });
+
+                return "data searching……";
+
+            }
+        },
+        legend: {
+            data: ['regression', 'classification'],
+            x: 'right'
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: {
+                interval: 0,//横轴信息全部显示
+                rotate: 30,//-30度角倾斜显示
+            }
+
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: 'regression',
+                type: 'bar',
+                stack: 'Total',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                data: [900, 345, 393, '-', '-', '-']
+            },
+            {
+                name: 'classification',
+                type: 'bar',
+                stack: 'Total',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                data: ['-', '-', '-', 119, 361, 203]
+            }
+        ]
+    };
+    $.ajax({
+        url: "/bar_data",
+        type: "get",
+        success: function (data) {
+            option.series[0].data = data[0]
+            option.series[1].data = data[1]
+            option.xAxis.data = data[2]
+            chart.setOption(option);
+        },
+        error: function () {
+            "请求失败时执行"
+        }
+    });
+
+    var elImgs = $('#panel img');
+
+    function img_show(img_index) {
+        target = elImgs.eq(img_index);
+        elImgs.each(function (){
+            $(this).attr('data-src',$(this).attr("src")).removeAttr('src')
+        })
+        console.log(target.attr('data-src'))
+        target.attr({'src':target.attr('data-src'),width:"500px","style":"margin:5px 0"}).removeAttr('data-src')
+        $("#panel").preloaded = true
+    }
+</script>
+</body>
+</html>

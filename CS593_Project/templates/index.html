@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+    <script>
+        function resShow(){
+            let mode = '{{mode}}';
+            if(mode.includes('old')) {
+                let pred = '{{prediction}}';
+                let txt = '{{predText}}';
+                let p = document.getElementById('predictio');
+                p.removeAttribute("hidden");
+                // p.innerHTML = pred+txt;
+                document.getElementById("predText").value = txt;
+                let im = '{{tmpimg}}';
+                let q = document.getElementById("img1");
+                q.removeAttribute("hidden");
+                q.src = `data:image/jpeg;base64,${im}`;
+            }
+        }
+    </script>
+</head>
+<body onload="resShow()">
+    <h1 id="acc">Model Accuracy: {{ accuracy }}%</h1>
+
+    <form action="#" method="post" name="form_name" id="form_id" class="form_class" hidden>
+        <input type="text" name="text1" id="word" placeholder="Name" hidden/>
+        <input type="text" name="text2" id="word2" placeholder="Name" hidden/>
+        <input type="text" name="text3" id="word4" placeholder="Name" hidden/>
+        <input type="text" name="oper" id="word3" placeholder="Name" hidden/>
+    </form>
+
+    <h2>Text Document</h2>
+
+    <textarea id="predText" onclick="clearbox()" name="test" rows="4" cols="50">
+        Input Text to be Predicted.
+    </textarea>
+    <button id="predi" type="button" onclick="predic()">Predict!</button>
+
+    <h1 id="predictio" hidden>Prediction Result::: {{prediction}}<br>
+        Confidence::: {{conf}}%</h1>
+
+    <img id="img1" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
+        //8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" hidden alt="Blank Image">
+
+    <button id="add" type="button" onclick="addword()">Add Word!</button>
+    <button id="rem" type="button" onclick="removeword()">Remove Word!</button>
+    <button id="modif" type="button" onclick="modifyword()">Modify Word Weight!</button>
+
+    <script>
+    function addword() {
+      let person = prompt("Please enter the word", "Opportunity");
+      document.getElementById("word").value = person;
+      document.getElementById("word3").value = 'add';
+      document.getElementById("form_id").submit();
+      console.log(person)
+    }
+
+    function modifyword() {
+      let person = prompt("Please enter the word", "Opportunity");
+      let p2 = prompt("Please enter the weight/importance", 1);
+      let p3 = prompt("Please enter the class label", 0);
+      document.getElementById("word").value = person;
+      document.getElementById("word2").value = p2;
+      document.getElementById("word3").value = 'modify';
+      document.getElementById("word4").value = p3;
+      document.getElementById("form_id").submit();
+      // console.log(person)
+    }
+
+    function removeword() {
+      document.getElementById("word").value = prompt("Please enter the word", "Opportunity");
+      document.getElementById("word3").value = 'remove';
+      document.getElementById("form_id").submit();
+      // console.log(person)
+    }
+
+    function clearbox(){
+        document.getElementById("predText").value = '';
+    }
+
+    function predic(){
+        document.getElementById("word").value = document.getElementById("predText").value;
+        document.getElementById("word3").value = 'predict';
+        document.getElementById("form_id").submit();
+    }
+    </script>
+</body>
+</html>

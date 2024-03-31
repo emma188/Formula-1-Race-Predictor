@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <title>Title</title>
+    <style>
+        .b {
+            position: absolute;
+            right: 80px
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container py-5">
+
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4">F1-race Predictor</h1>
+        </div>
+    </div>
+    <!-- End -->
+
+    <form action="#" method="post" name="form_name" id="form_id" class="form_class" hidden>
+        <input type="text" name="text1" id="word" placeholder="Name" hidden/>
+        <input type="text" name="text2" id="word2" placeholder="Name" hidden/>
+        <input type="text" name="text3" id="word4" placeholder="Name" hidden/>
+        <input type="text" name="text4" id="word5" placeholder="Name" hidden/>
+        <input type="text" name="oper" id="word3" placeholder="Name" hidden/>
+    </form>
+
+
+    <form class="row">
+        <div class="col-lg-7 mx-auto">
+            <div class="bg-white rounded-lg shadow-sm p-5">
+                <!-- Credit card form tabs -->
+                <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
+                    <li class="nav-item">
+                        <a data-toggle="pill" href="#nav-tab-model" class="nav-link  rounded-pill"><!--active-->
+                            <i class="fa-solid fa-globe"></i>
+                            Model
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="pill" href="#nav-tab-feature" class="nav-link rounded-pill">
+                            <i class="fa-solid fa-tree"></i>
+                            Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="pill" href="#nav-tab-year" class="nav-link rounded-pill">
+                            <i class="fa fa-university"></i>
+                            Years
+                        </a>
+                    </li>
+                </ul>
+                <!-- End -->
+
+                <!--type="button" onclick="modShow()"-->
+                <!-- Credit card form content -->
+                <div class="tab-content">
+                    <!-- credit card info-->
+                    <div id="nav-tab-model" class="tab-pane fade show active">
+                        <!--                        <p class="alert alert-success">Some text success or error</p>-->
+                        <form role="form">
+                            <div class="form-group">
+                                <dt>Model Class</dt>
+                                <div class="dropdown" id="modClass">
+                                    <a href="#" class="dropdown-toggle" id="modc" data-toggle="dropdown">option</a>
+                                    <ul class="dropdown-menu" id="modCls">
+                                        <li class="dropdown-item"><a href="#">Regression <i
+                                                class="fa fa-spinner fa-pull-right"></i></a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item"><a href="#">Classification <i
+                                                class="fa fa-spinner fa-pull-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="modName" class="form-group" style="display: none">
+                                <label for="modName">Classifier Class</label>
+
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle" id="modn" data-toggle="dropdown">option</a>
+                                    <ul class="dropdown-menu" id="modName11">
+                                        <li class="dropdown-item"><a href="#">Neural Network</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item"><a href="#">Random Forest</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item"><a href="#">SVM</a></li>
+                                        <li class="dropdown-divider"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="modName2" class="form-group" style="display: none">
+                                <label for="modName2">Regressor Class</label>
+
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle" id="modn2"
+                                       data-toggle="dropdown">option</a>
+                                    <ul class="dropdown-menu" id="modName22">
+                                        <li class="dropdown-item"><a href="#">Neural Network</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item"><a href="#">SVM</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item"><a href="#">Linear Regressor</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="nnOuter" class="form-group" style="display: none;border-style: inset">
+                                <label for="nnOuter">Neural Network Hyperparameters</label>
+                                <div class="btn btn-sm btn-info b"  data-toggle="pill" href="#nav-tab-feature" >base Model</div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip" style="white-space: pre-line;"
+                                           title="Activation function for the hidden layer.
+                                           ‘identity’: no-op activation, useful to implement linear bottleneck, returns f(x) = x<br>
+                            ‘logistic’: the logistic sigmoid function, returns f(x) = 1 / (1 + exp(-x)).<br>
+
+                            ‘tanh’: the hyperbolic tan function, returns f(x) = tanh(x).<br>
+
+                            ‘relu’: the rectified linear unit function, returns f(x) = max(0, x)">Activation Function
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="nnInner1"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="nnp1">
+                                            <li class="dropdown-item"><a href="#">Identity</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Logistic</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Tanh</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">ReLU</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Put it as comma separated integers, each for each hidden layer i.e. (75, 30, 50, 10, 3)">Hidden
+                                        Layer Sizes
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <input type="text" id="nnp2" placeholder="(75, 30, 50, 10, 3)"
+                                           oninput="strnn2()"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Solver for weight optimization">Solver
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="nnInner2"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="nnp3">
+                                            <li class="dropdown-item"><a href="#">lbfgs</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">adam</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">sgd</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Strength of the L2 regularization term. The L2 regularization term is divided by the sample size when added to the loss.">Alpha
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <input type="text" id="nnp4" placeholder="0.4832930238571752" oninput="strnn4()"
+                                           class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div id="svmOuter" class="form-group" style="display: none;border-style: inset">
+                                <label for="svmOuter">SVM Hyperparameters</label>
+
+                                <div class="btn btn-sm btn-info b"  data-toggle="pill" href="#nav-tab-feature" > base Model</div>
+
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Specifies the kernel type to be used in the algorithm.
+                                           If none is given, ‘rbf’ will be used. If a callable is given it is used to pre-compute the kernel matrix from
+                                           data matrices; that matrix should be an array of shape (n_samples, n_samples).">Kernel
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="svmInner1"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="svmp1">
+                                            <li class="dropdown-item"><a href="#">Linear</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Poly</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Rbf</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Sigmoid</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.<br> <br>
+                                           if gamma='scale' (default) is passed then it uses 1 / (n_features * X.var()) as value of gamma,<br>
+                                           if ‘auto’, uses 1 / n_features. Format must be float. eg. input 10.0 not 10">Gamma
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="svmInner2"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="svmp2">
+                                            <li class="dropdown-item"><a href="#">Scale</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Auto</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Float value</a></li>
+                                        </ul>
+                                        <input type="text" id="svmp2text" style="display: none"
+                                               placeholder="Float value only(NO STRINGS)" oninput="strsvm2()"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Regularization parameter. The strength of the regularization is inversely proportional to C.<br>
+                                            Must be strictly positive. The penalty is a squared l2 penalty.">C
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <input type="text" id="svmp3" placeholder="10.0" oninput="strsvm3()"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Class weight for class 0(Loser in the race) and class 1(Winner in the race).<br>
+                                                  Put the values comma separated. <br>
+                                                  2,1 means the loser class samples has double weight of winner class samples">cw
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <input type="text" id="svmp4" placeholder="(1, 1)" oninput="strsvm4()"
+                                           class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div id="rndOuter" class="form-group" style="display: none;border-style: inset">
+                                <label for="rndOuter">Random Forest Hyperparameters</label>
+
+                                <div class="btn btn-sm btn-info b"  data-toggle="pill" href="#nav-tab-feature" > base Model</div>
+
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="The function to measure the quality of a split. &#10
+                                           Supported criteria are “gini” for the Gini impurity and “log_loss” and “entropy” &#10
+                                           both for the Shannon information gain.">Criterion
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="rndInner1"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="rndp1">
+                                            <li class="dropdown-item"><a href="#">Gini</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Entropy</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Log_loss</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="The number of features to consider when looking for the best split:&#10
+
+                                            If float, then max_features is a fraction and max(1, int(max_features * n_features_in_)) features are considered at each split.&#10
+
+                                            If “auto”, then max_features=sqrt(n_features).&#10
+
+                                            If “sqrt”, then max_features=sqrt(n_features).&#10
+
+                                            If “log2”, then max_features=log2(n_features).&#10
+
+                                            If None, then max_features=n_features.">Max Features
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" id="rndInner2"
+                                           data-toggle="dropdown">option</a>
+                                        <ul class="dropdown-menu" id="rndp2">
+                                            <li class="dropdown-item"><a href="#">Sqrt</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Log2</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">auto</a></li>
+                                            <li class="dropdown-divider"></li>
+                                            <li class="dropdown-item"><a href="#">Float value</a></li>
+                                        </ul>
+                                        <input type="text" id="rndp2text" style="display: none"
+                                               placeholder="Float value only(NO STRINGS)" oninput="strrnd2()"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="The maximum depth of the tree. &#10
+                                           If None, then nodes are expanded until all leaves are pure or until all leaves &#10
+                                           contain less than min_samples_split samples.">Max Depth
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+                                    <input type="text" id="rndp3" placeholder="int value. -1 for None"
+                                           oninput="strrnd3()" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div id="lrOuter" class="form-group" style="display: none;border-style: inset">
+                                <label for="lrOuter">Logistic Regressor Hyperparameters</label>
+
+                                <div class="btn btn-sm btn-info b"  data-toggle="pill" href="#nav-tab-feature" > base Model</div>
+
+                                <div class="form-group">
+                                    <label data-toggle="tooltip"
+                                           title="Algorithm to use in the optimization problem. Default is ‘lbfgs’. To choose a solver, you might want to consider the following aspects:&#10
+
+                                            For small datasets, ‘liblinear’ is a good choice, whereas ‘sag’ and ‘saga’ are faster for large ones;&#10
+
+                                            For multiclass problems, only ‘newton-cg’, ‘sag’, ‘saga’ and ‘lbfgs’ handle multinomial loss;&#10
+
+                                            ‘liblinear’ is limited to one-versus-rest schemes.">Solver
+                                        <i class="fa fa-question-circle"></i>
+                                    </label>
+
+                                </div>
+
+                            </div>
+                        </form>
+                        <a data-toggle="pill" href="#nav-tab-feature" class="nav-link rounded-pill">
+                            <button
+                                    class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                                Confirm
+                            </button>
+                        </a>
+                    </div>
+
+                    <!-- End -->
+                    <!-- Paypal info -->
+                    <div id="nav-tab-feature" class="tab-pane fade">
+                        <dt data-toggle="tooltip"
+                            title="Here you can choose to leave out some features for training.
+                                    Select `All features` if you want to leave out none. The features you select here won't be used for training the model.">
+                            Feature
+                            Selection
+                            <i class="fa fa-question-circle"></i>
+                        </dt>
+                        <div class="form-group">
+                            <select class="form-select" id="featsel" onchange="featshow()">
+                                <option value="all" selected>All Features</option>
+                                <option value="remove">Remove Features</option>
+                            </select>
+                            <span style="margin-left: 220px" class="btn btn-info" onclick="img_show()">Feature Importance</span>
+                        </div>
+                        <img id="image1" src="" >
+                        <button style="display:none;" id="addfeat" type="button"
+                                onclick="addElement('feats','select','form-group')"
+                                class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                            Add a Feature
+                        </button>
+                        <div style="display: none;margin: 40px;" id="feats" class="form-group">
+                            <select style="margin: 5px" class="form-select" id="feat0">
+                                <option value="" selected>Empty</option>
+                                <option value="circuit_id">Circuit ID</option>
+                                <option value="weather">Weather</option>
+                                <option value="nationality">Nationality</option>
+                                <option value="constructor">Constructor</option>
+                                <option value="grid">Grid</option>
+                                <option value="driver_points">Driver Points</option>
+                                <option value="driver_wins">Driver Wins in this Season</option>
+                                <option value="driver_standings_pos">Driver Standings Position</option>
+                                <option value="constructor_points">Constructor Points</option>
+                                <option value="constructor_wins">Constructor Wins</option>
+                                <option value="constructor_standings_pos">Constructor Standings Position</option>
+                                <option value="qualifying_time">Qualifying Time</option>
+                                <option value="driver_age">Driver Age</option>
+                            </select>
+                        </div>
+                        <a data-toggle="pill" href="#nav-tab-year"
+                           class="nav-link rounded-pill">
+                            <button
+                                    class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                                Confirm
+                            </button>
+                        </a>
+                    </div>
+                    <!-- End -->
+                    <!-- bank transfer info -->
+                    <div id="nav-tab-year" class="tab-pane fade">
+                        <h6></h6>
+                        <dt data-toggle="tooltip"
+                            title="must be 1983-2019">
+                            Our dataset
+                            <i class="fa fa-question-circle"></i><br><br>
+                        </dt>
+                        <div class="form-group">
+                            <select class="form-select" id="year_choice" onchange="yearshow()">
+                                <option value="range"selected>Year Range</option>
+                                <option value="all" >Whole dataset</option>
+                            </select>
+                        </div>
+
+                        <div id="year_range">
+                        <form action="" class="form-inline" >
+<!--                            <div class="form-example">-->
+                                <label class="label" for="start">from</label>&nbsp;&nbsp;
+                                <input id="start" type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--                            </div>-->
+<!--                            <div class="form-example">-->
+                                <label for="end">to</label>&nbsp;&nbsp;
+                                <input id="end" type="text" name="name">
+<!--                            </div>-->
+                        </form></div>
+                        <dl style="color: red" id="warning"></dl>
+<!--                        <dl>-->
+<!--                            <dt>Bank</dt>-->
+<!--                            <dd> THE WORLD BANK</dd>-->
+<!--                        </dl>-->
+<!--                        <dl>-->
+<!--                            <dt>Account number</dt>-->
+<!--                            <dd>7775877975</dd>-->
+<!--                        </dl>-->
+<!--                        <dl>-->
+<!--                            <dt>IBAN</dt>-->
+<!--                            <dd>CZ7775877975656</dd>-->
+<!--                        </dl>-->
+                        <p class="text-muted" id="comment">Data from last ten years produce the best prediction (2011-2019)
+
+                        </p>
+                        <button type="button" onclick="modShow()"
+                                class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                            Confirm
+                        </button>
+                    </div>
+                    <!-- End -->
+                </div>
+                <!-- End -->
+
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //Return JSON Object
+    let ret = {}, params = {}, feats = 15;
+
+    let items = document.querySelectorAll("#modCls li");
+    // get selected element index
+    for (let i = 0; i < items.length; i++) {
+        items[i].onclick = function () {
+            params = {}
+            //Hide Every Hyperparameter block
+
+            document.getElementById('svmOuter').style.display = 'none';
+            document.getElementById('rndOuter').style.display = 'none';
+            document.getElementById('nnOuter').style.display = 'none';
+            document.getElementById('lrOuter').style.display = 'none';
+
+
+            if (this.innerHTML.includes('Regression')) {
+                ret['type'] = 'regression';
+                document.getElementById('modc').innerHTML = 'Regression';
+                document.getElementById('modName2').style.display = 'block';
+                document.getElementById('modName').style.display = 'none';
+            } else if (this.innerHTML.includes('Classification')) {
+                ret['type'] = 'classification';
+                document.getElementById('modc').innerHTML = 'Classification';
+                document.getElementById('modName').style.display = 'block';
+                document.getElementById('modName2').style.display = 'none';
+            }
+        };
+    }
+
+    let items2 = document.querySelectorAll("#modName11 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params = {};
+            ret['model'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('modn').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+            if (ret['model'].includes('Neural')) {
+                document.getElementById('svmOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'none';
+                document.getElementById('nnOuter').style.display = 'block';
+            } else if (ret['model'].includes('SVM')) {
+                document.getElementById('nnOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'none';
+                document.getElementById('svmOuter').style.display = 'block';
+            } else if (ret['model'].includes('Random')) {
+                document.getElementById('nnOuter').style.display = 'none';
+                document.getElementById('svmOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'block';
+            }
+        };
+    }
+
+    items2 = document.querySelectorAll("#modName22 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            ret['model'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('modn2').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+            if (ret['model'].includes('Neural')) {
+                document.getElementById('svmOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'none';
+                document.getElementById('nnOuter').style.display = 'block';
+            } else if (ret['model'].includes('SVM')) {
+                document.getElementById('nnOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'none';
+                document.getElementById('svmOuter').style.display = 'block';
+            } else if (ret['model'].includes('Logistic')) {
+                document.getElementById('nnOuter').style.display = 'none';
+                document.getElementById('svmOuter').style.display = 'none';
+                document.getElementById('rndOuter').style.display = 'none';
+                document.getElementById('lrOuter').style.display = 'block';
+            }
+        };
+    }
+
+    items2 = document.querySelectorAll("#nnp1 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params['activation'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('nnInner1').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+        };
+    }
+
+    items2 = document.querySelectorAll("#nnp3 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params['solver'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('nnInner2').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+        };
+    }
+
+    items2 = document.querySelectorAll("#svmp1 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params['kernel'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('svmInner1').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+        };
+    }
+
+    items2 = document.querySelectorAll("#svmp2 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            if (this.getElementsByTagName('a')[0].innerHTML.includes('Float')) {
+                document.getElementById('svmp2text').style.display = 'block';
+            } else {
+                document.getElementById('svmp2text').style.display = 'none';
+                params['gamma'] = this.getElementsByTagName('a')[0].innerHTML;
+                document.getElementById('svmInner2').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+            }
+        };
+    }
+
+    items2 = document.querySelectorAll("#rndp1 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params['criterion'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('rndInner1').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+        };
+    }
+
+    items2 = document.querySelectorAll("#rndp2 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            if (this.getElementsByTagName('a')[0].innerHTML.includes('Float')) {
+                document.getElementById('rndp2text').style.display = 'block';
+            } else {
+                document.getElementById('rndp2text').style.display = 'none';
+                params['maxf'] = this.getElementsByTagName('a')[0].innerHTML;
+                document.getElementById('rndInner2').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+            }
+        };
+    }
+
+    items2 = document.querySelectorAll("#lrp1 li");
+    // get selected element index
+    for (let i = 0; i < items2.length; i++) {
+        items2[i].onclick = function () {
+            params['solver'] = this.getElementsByTagName('a')[0].innerHTML;
+            document.getElementById('lrInner1').innerHTML = this.getElementsByTagName('a')[0].innerHTML;
+        };
+    }
+
+    function strnn2() {
+        params['hidden'] = document.getElementById('nnp2').value;
+    }
+
+    function strnn4() {
+        params['alpha'] = document.getElementById('nnp4').value;
+    }
+
+    function strsvm2() {
+        params['gamma'] = document.getElementById('svmp2text').value;
+        document.getElementById('svmInner2').innerHTML = params['gamma'];
+    }
+
+    function strsvm3() {
+        params['C'] = document.getElementById('svmp3').value;
+    }
+
+    function strsvm4() {
+        params['cweight'] = document.getElementById('svmp4').value;
+    }
+
+    function strrnd2() {
+        params['maxf'] = document.getElementById('rndp2text').value;
+        document.getElementById('rndInner2').innerHTML = document.getElementById('rndp2text').value;
+    }
+
+    function strrnd3() {
+        params['maxd'] = document.getElementById('rndp3').value;
+    }
+
+    function strlr2() {
+        params['C'] = document.getElementById('lrp2').value;
+    }
+
+    function modShow() {
+
+<!--        if (Number($("#start").val()) < 1983 || Number($("#end").val()) > 2019) {-->
+<!--            $("#warning").text("must be 1983-2019")-->
+<!--        } else {-->
+            retfeats = [];
+            for (let i = 0; i < feats; i++) {
+                if (document.getElementById(`feat${i}`)){
+                    let mylist = document.getElementById(`feat${i}`);
+                    retfeats.push(mylist.options[mylist.selectedIndex].value);
+                }
+            }
+            console.log(retfeats)
+
+            document.getElementById("word").value = JSON.stringify(retfeats);
+            document.getElementById("word2").value = JSON.stringify(ret);
+            let myyear = document.getElementById('year_choice');
+            year = []
+            if (myyear.options[myyear.selectedIndex].value.includes('range')) {
+                document.getElementById("word5").value = JSON.stringify([$("#start").val(),$("#end").val()]);
+            }
+            else{
+                document.getElementById("word5").value = JSON.stringify(year);
+            }
+
+            document.getElementById("word3").value = JSON.stringify(params);
+            document.getElementById("form_id").submit();
+<!--        }-->
+    }
+
+    function featshow() {
+        let mylist = document.getElementById('featsel');
+        if (mylist.options[mylist.selectedIndex].value.includes('remove')) {
+            document.getElementById('feats').style.display = 'block';
+            document.getElementById('addfeat').style.display = 'block';
+        } else {
+            document.getElementById('feats').style.display = 'none';
+            document.getElementById('addfeat').style.display = 'none';
+        }
+    }
+
+    function yearshow() {
+        let mylist = document.getElementById('year_choice');
+        if (mylist.options[mylist.selectedIndex].value.includes('range')) {
+            document.getElementById('year_range').style.display = 'block';
+            document.getElementById('comment').style.display = 'block';
+<!--            document.getElementById('addfeat').style.display = 'block';-->
+        } else {
+            document.getElementById('year_range').style.display = 'none';
+            document.getElementById('comment').style.display = 'none';
+
+<!--            document.getElementById('addfeat').style.display = 'none';-->
+        }
+    }
+
+    function addElement(parentID, elementTag, cls) {
+        if (feats === 0) {
+            feats = 1;
+        }
+        feats = feats + 1;
+        var p = document.getElementById(parentID);
+        var newElement = document.createElement(elementTag);
+        newElement.setAttribute('id', `feat${feats - 1}`);
+        newElement.setAttribute('class', cls);
+        newElement.style.margin = "5px";
+        newElement.innerHTML = `<option value="" selected>Empty</option>
+                                <option value="season">Season</option>
+                                <option value="round">Round</option>
+                                <option value="circuit_id">Circuit ID</option>
+                                <option value="weather">Weather</option>
+                                <option value="nationality">Nationality</option>
+                                <option value="constructor">Constructor</option>
+                                <option value="grid">Grid</option>
+                                <option value="driver_points">Driver Points</option>
+                                <option value="driver_wins">Driver Wins in this Season</option>
+                                <option value="driver_standings_pos">Driver STandings Position</option>
+                                <option value="constructor_points">Constructor Points</option>
+                                <option value="constructor_wins">Constructor Wins</option>
+                                <option value="constructor_standings_pos">Constructor Standings Position</option>
+                                <option value="qualifying_time">Qualifying Time</option>
+                                <option value="driver_age">Driver Age</option>`;
+        p.appendChild(newElement);
+    }
+
+    function img_show(){
+        var image1 = $("#image1")
+        if(image1.attr("src")===""){
+            image1.attr({"src":'../static/images/6.png','width':'500px'})//{{ url_for('static', filename='images/6.png') }}
+        }
+    }
+</script>
+</body>
+</html>
